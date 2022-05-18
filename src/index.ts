@@ -19,11 +19,8 @@ createConnection().then(async () => {
 
     app.use('/api/v1/', routes);
 
-    const port =
-        process.env.NODE_ENV === "test" ? process.env.TEST_PORT : process.env.PORT;
-
     // start the server
-    app.listen(port, () => console.log(`server started at Port ${port}`));
+    app.listen(5050, () => console.log(`server started at port 5050`));
 
 
 }).catch(error => console.log(error));

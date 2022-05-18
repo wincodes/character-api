@@ -1,7 +1,12 @@
 # Awesome Project Build with TypeORM
 
-Steps to run this project:
+Steps to run this project with npm:
 
-1. Run `npm i` command
-2. Setup database settings inside `ormconfig.json` file, find example in ormconfig.example.json
+1. On the root directory Run `npm i` command
+2. Copy contents of ormconfig.example.json in a new file named `ormconfig.json` and update the postgres database connection variables in the new created file `ormconfig.json`
 3. Run `npm start` command
+
+## Run App with Docker
+
+1. On the root directory run `docker-compose build` to build the docker image
+2. After build, run `docker-compose up` to start the image

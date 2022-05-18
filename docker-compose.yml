@@ -1,0 +1,13 @@
+version: '3'
+services:
+
+  vendease-test:
+    build:
+      context: .
+    env_file: .env
+    container_name: 'vendease-test'
+    ports:
+      - 5050:5050
+    volumes:
+      - .:/var/www/
+      - /var/www/node_modules

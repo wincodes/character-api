@@ -17,12 +17,12 @@ export class Episode {
   @Column()
   episode_code: string;
 
-  @Column({ nullable: true })
+  @Column({ type: "jsonb", nullable: true })
   characters: Character;
-  
-  @Column({ nullable: true })
+
+  @Column({ type: "jsonb", nullable: true })
   episode_comments: Comment;
-  
+
   @Column({ type: "timestamp", default: moment().format() })
   created_at: Date;
 }

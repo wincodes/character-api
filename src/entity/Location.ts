@@ -10,10 +10,10 @@ export class Location {
     @Column()
     name: String;
 
-    @Column()
+    @Column({ type: "double precision" })
     latitude: Double;
 
-    @Column()
+    @Column({ type: "double precision"})
     longitude: Double;
 
     @Column({ type: "timestamp", default: moment().format() })

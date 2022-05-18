@@ -30,10 +30,10 @@ export class Character {
   @Column({ type: "enum", enum: ["MALE", "FEMALE"] })
   gender: genderType;
 
-  @Column({ nullable: true })
+  @Column({ type: "jsonb", nullable: true })
   location: Location;
 
-  @Column({ nullable: true })
+  @Column({ type: "jsonb", nullable: true })
   episodes: Episode;
 
   @Column({ type: "timestamp", default: moment().format() })

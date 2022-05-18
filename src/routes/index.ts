@@ -10,6 +10,6 @@ router.get('/', (req : any, res) => {
     });
 })
 
-// router.post('/character/create', DataController.createCharacter)
+router.post('/character/create', DataController.createCharacter)
 
 export default router;

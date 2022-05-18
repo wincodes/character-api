@@ -187,6 +187,33 @@ export class DataController {
     }
   }
 
+  static async getEpisodes(req: any, res: any): Promise<Responses> {
+    try {
+      const episodes = await getRepository(Episode).find({
+        order: {
+          release_date: "ASC",
+        },
+      });
+
+      episodes.forEach((el) => {
+        const comm: any = el.episode_comments;
+        el.episode_comments = comm ? comm.length : 0;
+      });
+
+      return res.status(201).json({
+        status: "success",
+        message: "Episode List Successful",
+        data: episodes,
+      });
+    } catch (error) {
+      await log("Create Episode error", error, "default");
+      return res.status(500).json({
+        status: "failed",
+        message: "An error Occurred Please Try again",
+      });
+    }
+  }
+
   static async createComment(req: any, res: any): Promise<Responses> {
     try {
       const rules = {

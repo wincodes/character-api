@@ -367,4 +367,90 @@ export class DataController {
       });
     }
   }
+
+  static async getEpisodesByCharacters(req: any, res: any): Promise<Responses> {
+    try {
+      const { char_id } = req.params;
+      let episodes = await getRepository(Episode).find();
+
+      episodes = episodes.filter((item) => {
+        const chars: any = item.characters;
+        return item.characters && chars.find((ch) => ch.id === Number(char_id));
+      });
+
+      return res.status(200).json({
+        status: "success",
+        message: "Episode List Successful",
+        data: episodes,
+      });
+    } catch (error) {
+      await log("Create Episode error", error, "default");
+      return res.status(500).json({
+        status: "failed",
+        message: "An error Occurred Please Try again",
+      });
+    }
+  }
+
+  static async addCommentToEpisode(req: any, res: any): Promise<Responses> {
+    try {
+      const rules = {
+        comment: "required|string",
+        ip_address_location: "required|string",
+      };
+
+      const validation = new Validator(req.body, rules);
+
+      if (validation.fails()) {
+        return res.status(400).json({
+          status: "failed",
+          message: "Validation Errors",
+          data: { errors: validation.errors.all() },
+        });
+      }
+
+      const {
+        body: { comment, ip_address_location },
+        params: { id },
+      } = req;
+
+      let episode = await getRepository(Episode).findOne({
+        where: { id },
+      });
+
+      if (!episode) {
+        return res.status(404).json({
+          status: "failed",
+          message: `Episode Not Found`,
+        });
+      }
+
+      const newComment = new Comment();
+      newComment.comment = comment;
+      newComment.ip_address_location = ip_address_location;
+      await getManager().save(newComment);
+
+      let commentList = null;
+      let commArr: any = episode.episode_comments;
+
+      commentList = episode.episode_comments
+        ? [...commArr, newComment]
+        : [newComment];
+
+      episode.episode_comments = commentList;
+      await getManager().save(episode);
+
+      return res.status(200).json({
+        status: "success",
+        message: "Episode List Successful",
+        data: episode,
+      });
+    } catch (error) {
+      await log("Create Episode error", error, "default");
+      return res.status(500).json({
+        status: "failed",
+        message: "An error Occurred Please Try again",
+      });
+    }
+  }
 }

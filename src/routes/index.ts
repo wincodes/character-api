@@ -15,6 +15,8 @@ router.post("/characters/list", DataController.getCharacters)
 
 router.post('/episode/create', DataController.createEpisode)
 router.get("/episodes/list", DataController.getEpisodes)
+router.get("/episodes/get-by-character/:char_id", DataController.getEpisodesByCharacters)
+router.post("/episodes/add-comment/:id", DataController.addCommentToEpisode)
 
 router.post('/comment/create', DataController.createComment)
 router.get("/comments/list", DataController.getComments)

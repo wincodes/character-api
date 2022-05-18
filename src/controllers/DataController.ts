@@ -105,6 +105,60 @@ export class DataController {
     }
   }
 
+  static async getCharacters(req: any, res: any): Promise<Responses> {
+    try {
+      const rules = {
+        first_name: "required|in:ASC,DESC",
+        gender_sort: "required|in:ASC,DESC",
+        gender: "in:MALE,FEMALE",
+        status: "in:ACTIVE,DEAD,UNKNOWN",
+        location: "numeric",
+      };
+
+      const validation = new Validator(req.body, rules);
+
+      if (validation.fails()) {
+        return res.status(400).json({
+          status: "failed",
+          message: "Validation Errors",
+          data: { errors: validation.errors.all() },
+        });
+      }
+
+      const { first_name, gender, gender_sort, status, location } = req.body;
+
+      const where: any = {};
+      if (gender) where.gender = gender;
+      if (status) where.status = status;
+
+      let characters = await getRepository(Character).find({
+        where,
+        order: {
+          first_name,
+          gender: gender_sort,
+        },
+      });
+
+      if (location) {
+        characters = characters.filter(
+          (item) => item.location && item.location.id === location
+        );
+      }
+
+      return res.status(200).json({
+        status: "success",
+        message: "Episode List Successful",
+        data: characters,
+      });
+    } catch (error) {
+      await log("Create Episode error", error, "default");
+      return res.status(500).json({
+        status: "failed",
+        message: "An error Occurred Please Try again",
+      });
+    }
+  }
+
   static async createEpisode(req: any, res: any): Promise<Responses> {
     try {
       const rules = {

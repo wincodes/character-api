@@ -11,6 +11,7 @@ router.get('/', (req : any, res) => {
 })
 
 router.post('/character/create', DataController.createCharacter)
+router.post("/characters/list", DataController.getCharacters)
 
 router.post('/episode/create', DataController.createEpisode)
 router.get("/episodes/list", DataController.getEpisodes)

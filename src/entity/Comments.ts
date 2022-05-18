@@ -10,7 +10,7 @@ export class Comment {
   comment: string;
 
   @Column()
-  ip_address_location: String;
+  ip_address_location: string;
 
   @Column({ type: "timestamp", default: moment().format() })
   created_at: Date;

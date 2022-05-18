@@ -12,4 +12,10 @@ router.get('/', (req : any, res) => {
 
 router.post('/character/create', DataController.createCharacter)
 
+router.post('/episode/create', DataController.createEpisode)
+
+router.post('/comment/create', DataController.createComment)
+
+router.post('/location/create', DataController.createLocation)
+
 export default router;

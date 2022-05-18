@@ -16,6 +16,7 @@ router.post('/episode/create', DataController.createEpisode)
 router.get("/episodes/list", DataController.getEpisodes)
 
 router.post('/comment/create', DataController.createComment)
+router.get("/comments/list", DataController.getComments)
 
 router.post('/location/create', DataController.createLocation)
 

@@ -200,7 +200,7 @@ export class DataController {
         el.episode_comments = comm ? comm.length : 0;
       });
 
-      return res.status(201).json({
+      return res.status(200).json({
         status: "success",
         message: "Episode List Successful",
         data: episodes,
@@ -245,6 +245,28 @@ export class DataController {
       });
     } catch (error) {
       await log("Create Comment error", error, "default");
+      return res.status(500).json({
+        status: "failed",
+        message: "An error Occurred Please Try again",
+      });
+    }
+  }
+
+  static async getComments(req: any, res: any): Promise<Responses> {
+    try {
+      const comments = await getRepository(Comment).find({
+        order: {
+          created_at: "DESC",
+        },
+      });
+
+      return res.status(200).json({
+        status: "success",
+        message: "Comment List Successful",
+        data: comments,
+      });
+    } catch (error) {
+      await log("Create Episode error", error, "default");
       return res.status(500).json({
         status: "failed",
         message: "An error Occurred Please Try again",
